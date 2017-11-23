@@ -91,7 +91,6 @@
     <Content Include="css\default.css" />
     <Content Include="LICENSE.md" />
     <Content Include="main.css" />
-    <Content Include="README.md" />
     <Content Include="js\main.js" />
     <None Include="Hollow Knight FSM Viewer 2_TemporaryKey.pfx" />
     <None Include="js\jquery-ui-1.12.1\package.json" />
