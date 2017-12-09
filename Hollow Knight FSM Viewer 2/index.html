@@ -10,11 +10,15 @@
       <script type="text/javascript" src="js/main.js"></script>
   </head>
   <body>
-    <div id="fsmFiles" class="ui-widget">
-        <input type="button" id="btnDirSelect" value="Select Directory" style="width:146px"> : <span id="currentDirectory"></span><br />
-        <label for="files" style="width:146px; display:inline-block;">FSM File:</label><input id="files" type="text" placeholder="Start Typing To Select FSM" style="width:400px" disabled="disabled">
-    </div>
-    <svg id="svg"></svg>
+  <div id="fsmFiles" class="ui-widget">
+      <input type="button" id="btnDirSelect" value="Select Directory" style="width:146px"> : <span id="currentDirectory"></span><br />
+      <label for="files" style="width:146px; display:inline-block;">FSM File:</label><input id="files" type="text" placeholder="Start Typing To Select FSM" style="width:400px" disabled="disabled">
+  </div>
+  <div style="height: 100%; width: 100%;">
+      <div id="viewer" style="margin-top: 100px;">
+          <svg id="svg" style="width: 5000px; height:5000px"></svg>
+      </div>
+  </div>
     <div id="info">
         <div id="info_head"></div>
         <div id="info_transitions_title">Transitions</div>

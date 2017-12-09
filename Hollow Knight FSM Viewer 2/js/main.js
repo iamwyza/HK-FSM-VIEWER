@@ -247,12 +247,12 @@ $(document).ready(function () {
 
     function createDiv(x, y, w, h, c, text) {
         var div = document.createElement("div");
-        document.body.appendChild(div);
+        $("#viewer").append(div);
 
-        div.style.left = x + "px"
-        div.style.top = y + "px"
-        div.style.width = w + "px"
-        div.style.height = h + "px"
+        div.style.left = x + "px";
+        div.style.top = y + "px";
+        div.style.width = w + "px";
+        div.style.height = h + "px";
         div.className = c;
 
         div.onmouseover = function () { updateInfo(text) };
@@ -264,8 +264,8 @@ $(document).ready(function () {
         var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
         line.setAttribute("x1", x);
         line.setAttribute("x2", x2);
-        line.setAttribute("y1", y - 100);
-        line.setAttribute("y2", y2 - 100);
+        line.setAttribute("y1", y);
+        line.setAttribute("y2", y2);
         line.style.stroke = c;
         line.style.strokeWidth = s;
         svg.appendChild(line);
@@ -296,6 +296,9 @@ $(document).ready(function () {
             directory = folder;
             $("#currentDirectory").html(directoryName);
 
+            var oldplaceholder = $('#files').attr('placeholder');
+            $('#files').attr('placeholder', 'Loading...');
+
             folder.getFilesAsync().done(function (files) {
                 var fileList = [];
                 $.each(files,
@@ -312,6 +315,7 @@ $(document).ready(function () {
                     }
                 });
                 $("#files").prop("disabled", false);
+                $('#files').prop('placeholder', oldplaceholder);
             });
         }
     }
@@ -322,10 +326,14 @@ $(document).ready(function () {
     function loadFile(fileName) {
         var svg = $("#svg");
         svg.empty();
+        $("#viewer").css({
+            'left': $("#viewer").data("originalLeft"),
+            'top': $("#viewer").data("origionalTop")
+        });
         $(".fsmBox").remove();
+        
         directory.tryGetItemAsync(fileName).done(function (file) {
             Windows.Storage.FileIO.readTextAsync(file).done(function (data) {
-
                 fsm = JSON.parse(data);
                 var arr = fsm.states;
                 for (var i = 0; i < arr.length; i++) {
@@ -373,6 +381,16 @@ $(document).ready(function () {
             .done(loadFiles);
     }
 
+    $("#viewer").data({
+        'originalLeft': $("#viewer").css("left"),
+        'origionalTop': $("#viewer").css("top")
+    });
 
+    $('#viewer').draggable({
+        zIndex: 0,
+        scroll: false
+    });
+   // svgPanZoom("#svg");
+    var test = Windows.UI.ViewManagement.ApplicationView.getForCurrentView();
     //loadFiles();
 });
